@@ -1,1 +1,1 @@
-# udemy-webscraper-Hackernews
+# udemy-web-scraper
