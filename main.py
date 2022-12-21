@@ -3,24 +3,29 @@ from bs4 import BeautifulSoup
 import pprint
 
 res = requests.get('https://news.ycombinator.com/')
+res2 = requests.get('https://news.ycombinator.com/?p=2')
 soup = BeautifulSoup(res.text, 'html.parser')
+soup2 = BeautifulSoup(res2.text, 'html.parser')
+
 links = (soup.select('.titleline > a'))
-votes = (soup.select('.score'))
+links2 = (soup2.select('.titleline > a'))
+subtext = (soup.select('.subtext'))
 
 def sort_stories_by_points(hnlist):
     return sorted(hnlist, reverse=True, key=lambda k:k['points'])
 
-def create_custom_hn(links, votes):
+def create_custom_hn(links, subtext):
     hn = []
     for inx, item in enumerate(links):
         title = links[inx].getText()
         href = links[inx].get('href')
-        points = int(votes[inx].getText().replace(' points', ''))
-        if points < 100:
-            continue
-        # print(points)
-        hn.append({'title': title, 'link': href, 'points':points})
+        vote = subtext[inx].select('.score')
+        if len(vote):
+            points = int(vote[0].getText().replace(' points', ''))
+            if points > 100:
+                hn.append({'title': title, 'link': href, 'points':points})
+        
     return sort_stories_by_points(hn)
 
 
-pprint.pprint((create_custom_hn(links, votes)))
+pprint.pprint((create_custom_hn(links, subtext)))
