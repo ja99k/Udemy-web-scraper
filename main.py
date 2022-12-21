@@ -22,7 +22,7 @@ def create_custom_hn(links, subtext):
         vote = subtext[inx].select('.score')
         if len(vote):
             points = int(vote[0].getText().replace(' points', ''))
-            if points > 100:
+            if points > 99:
                 hn.append({'title': title, 'link': href, 'points':points})
         
     return sort_stories_by_points(hn)
