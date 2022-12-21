@@ -19,12 +19,13 @@ def create_custom_hn(links, subtext):
     for inx, item in enumerate(links):
         title = links[inx].getText()
         href = links[inx].get('href')
+        comments = subtext[inx].getText().replace('&nbps;comments', '')
         vote = subtext[inx].select('.score')
         if len(vote):
             points = int(vote[0].getText().replace(' points', ''))
             if points > 99:
-                hn.append({'title': title, 'link': href, 'points':points})
-        
+                hn.append({'title': title, 'link': href, 'points':points, 'comments':comments})
+            # the comments section is not working properly
     return sort_stories_by_points(hn)
 
 
