@@ -20,7 +20,7 @@ def create_custom_hn(links, subline):
     for inx, item in enumerate(links):
         title = links[inx].getText()
         href = links[inx].get('href')
-        comments = subline[inx].getText().replace('.age', '')
+        comments = subline.getText().replace('.age', '')
         vote = subline[inx].select('.score')
         if len(vote):
             points = int(vote[0].getText().replace(' points', ''))
@@ -28,7 +28,7 @@ def create_custom_hn(links, subline):
                 parts = comments.split("|")
                 comments = parts[-1].strip()
                 comments = comments.replace('\xa0', ' ')
-                hn.append({'title': title, 'link': href, 'points':points, 'comments':comments})
+                hn.append({'points':points,'title': title, 'link': href, 'comments':comments})
     return sort_stories_by_points(hn)
 
 
