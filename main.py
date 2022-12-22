@@ -29,7 +29,6 @@ def create_custom_hn(links, subline):
                 comments = parts[-1].strip()
                 comments = comments.replace('\xa0', ' ')
                 hn.append({'title': title, 'link': href, 'points':points, 'comments':comments})
-            # the comments section is not working properly
     return sort_stories_by_points(hn)
 
 
